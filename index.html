@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>&beta;max: Opcode Demystifier</title>
+		<link href='http://fonts.googleapis.com/css?family=Roboto:400,400italic,300,300italic,700,700italic' rel='stylesheet' type='text/css'>
+		<link rel='stylesheet' type='text/css' href='style.css' />
+	</head>
+	<body>
+		<div id='main'>
+			<div id='header'>
+				<div id='logo'>&beta;<sub>max</sub></div>
+				<div id='tagline'>The Beta opcode demystifier</div>
+				<div id='explain'>
+				If you're a student in 6.004, you've probably spent a lot of time picking apart Beta opcodes by hand to figure out what they do. Well no more! You can use this tool to convert opcodes between hex and binary, examine different parts of each opcode, and hopefully gain some intuition along the way. Don't have too much fun.
+				</div>
+			</div>
+			<div id='tool' class='type-i'>
+				<div id='toolbar'>
+					Opcode type: 
+					<select id='opcode-type-select'>
+						<option value='type-i'>Rc Ra Rb</option>
+						<option value='type-ii'>Rc Ra Literal</option>
+					</select>
+					&nbsp;
+					Input base:
+					<select id='input-base-select'>
+						<option value='16'>Hex</option>
+						<option value='2'>Bin</option>
+					</select>
+					<input type='text' id='input-value' maxlength='8' placeholder='Type or paste a value here' />
+					Copyable hex output:
+					<span id='hex-out'>
+					00000000
+					</span>
+				<div id='part-summary'>
+					<span class='opcode'>
+					[31:26] Opcode: 0x<span class='opcode-hex'>000</span> (<span class='opcode-val val-sel'>???</span>)
+					</span>
+
+					<span class='rc'>
+					[25:21] Rc: 0x<span class='rc-hex'>000</span> (R<span class='val-sel rc-val'>XX</span>)
+					</span>
+
+					<span class='ra'>
+					[20:16] Ra: 0x<span class='ra-hex'>000</span> (R<span class='val-sel ra-val'>XX</span>)
+					</span>
+
+					<span class='rb'>
+					[15:11] Rb: 0x<span class='rb-hex'>000</span> (R<span class='val-sel rb-val'>XX</span>)
+					</span>
+
+					<span class='unused'>
+					[10:0] Unused
+					</span>
+
+					<span class='literal'>
+					[15:0] Literal: 0x<span class='val-sel literal-hex'>000</span> / 0d<span class='val-sel literal-dec'>000</span>
+					</span>
+				</div>
+				<div id='binary'>
+					<!-- A byte -->
+					<span class='byte'>
+						<span class='binary-hex-digit'>
+							<input type='text' maxlength='1' class='digit opcode-digit' value='0' />
+							<input type='text' maxlength='1' class='digit opcode-digit' value='0' />
+							<input type='text' maxlength='1' class='digit opcode-digit' value='0' />
+							<input type='text' maxlength='1' class='digit opcode-digit' value='0' />
+							<div class='range-left'>31</div>
+							<div class='range-right'>28</div>
+							<div class='hex-digit'>0</div>
+						</span>
+						<span class='binary-hex-digit'>
+							<input type='text' maxlength='1' class='digit opcode-digit' value='0' />
+							<input type='text' maxlength='1' class='digit opcode-digit' value='0' />
+							<span class='separator'></span>
+							<input type='text' maxlength='1' class='digit rc-digit' value='0' />
+							<input type='text' maxlength='1' class='digit rc-digit' value='0' />
+							<div class='range-left'>27</div>
+							<div class='range-right'>24</div>
+							<div class='hex-digit'>0</div>
+						</span>
+					</span>
+					<!-- A byte -->
+					<span class='byte'>
+						<span class='binary-hex-digit'>
+							<input type='text' maxlength='1' class='digit rc-digit' value='0' />
+							<input type='text' maxlength='1' class='digit rc-digit' value='0' />
+							<input type='text' maxlength='1' class='digit rc-digit' value='0' />
+							<span class='separator'></span>
+							<input type='text' maxlength='1' class='digit ra-digit' value='0' />
+							<div class='range-left'>23</div>
+							<div class='range-right'>20</div>
+							<div class='hex-digit'>0</div>
+						</span>
+						<span class='binary-hex-digit'>
+							<input type='text' maxlength='1' class='digit ra-digit' value='0' />
+							<input type='text' maxlength='1' class='digit ra-digit' value='0' />
+							<input type='text' maxlength='1' class='digit ra-digit' value='0' />
+							<input type='text' maxlength='1' class='digit ra-digit' value='0' />
+							<div class='range-left'>19</div>
+							<div class='range-right'>16</div>
+							<div class='hex-digit'>0</div>
+						</span>
+					</span>
+					<span class='separator'></span>
+					<!-- A byte -->
+					<span class='byte'>
+						<span class='binary-hex-digit'>
+							<input type='text' maxlength='1' class='digit type-i-rb-digit type-ii-literal' value='0' />
+							<input type='text' maxlength='1' class='digit type-i-rb-digit type-ii-literal' value='0' />
+							<input type='text' maxlength='1' class='digit type-i-rb-digit type-ii-literal' value='0' />
+							<input type='text' maxlength='1' class='digit type-i-rb-digit type-ii-literal' value='0' />
+							<div class='range-left'>15</div>
+							<div class='range-right'>12</div>
+							<div class='hex-digit'>0</div>
+						</span>
+						<span class='binary-hex-digit'>
+							<input type='text' maxlength='1' class='digit type-i-rb-digit type-ii-literal' value='0' />
+							<span class='type-i-separator'></span>
+							<input type='text' maxlength='1' class='digit type-i-unused type-ii-literal' value='0' />
+							<input type='text' maxlength='1' class='digit type-i-unused type-ii-literal' value='0' />
+							<input type='text' maxlength='1' class='digit type-i-unused type-ii-literal' value='0' />
+							<div class='range-left'>11</div>
+							<div class='range-right'>8</div>
+							<div class='hex-digit'>0</div>
+						</span>
+					</span>
+					<!-- A byte -->
+					<span class='byte'>
+						<span class='binary-hex-digit'>
+							<input type='text' maxlength='1' class='digit type-i-unused type-ii-literal' value='0' />
+							<input type='text' maxlength='1' class='digit type-i-unused type-ii-literal' value='0' />
+							<input type='text' maxlength='1' class='digit type-i-unused type-ii-literal' value='0' />
+							<input type='text' maxlength='1' class='digit type-i-unused type-ii-literal' value='0' />
+							<div class='range-left'>7</div>
+							<div class='range-right'>4</div>
+							<div class='hex-digit'>0</div>
+						</span>
+						<span class='binary-hex-digit'>
+							<input type='text' maxlength='1' class='digit type-i-unused type-ii-literal' value='0' />
+							<input type='text' maxlength='1' class='digit type-i-unused type-ii-literal' value='0' />
+							<input type='text' maxlength='1' class='digit type-i-unused type-ii-literal' value='0' />
+							<input type='text' maxlength='1' class='digit type-i-unused type-ii-literal' value='0' />
+							<div class='range-left'>3</div>
+							<div class='range-right'>0</div>
+							<div class='hex-digit'>0</div>
+						</span>
+					</span>
+				</div>
+				<div id='result'></div>
+			</div>
+		</div>
+		<div id='footer'>
+			Made with &macr;\_(&#x30C4;)_/&macr; by <a href='http://idreyn.me'>Ian Reynolds</a>. Source <a href='http://github.com/idreyn/betamax'>on Github</a>.
+		</div>
+		<script type='text/javascript' src='https://code.jquery.com/jquery-2.1.3.min.js'></script>
+		<script type='text/javascript' src='main.js'></script>
+	</body>
+</html>
