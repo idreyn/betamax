@@ -429,7 +429,7 @@ function updateResult(op,rc,ra,rb,lit) {
 		desc = desc.replace('%ra','<span class="ra">' + parseInt(ra,2).toString(10) + '</span>');
 		desc = desc.replace('%rb','<span class="rb">' + parseInt(rb,2).toString(10) + '</span>');
 		desc = desc.replace('%op',op);
-		desc = desc.replace('%sl','<span class="literal" title="0x' + parseInt(ra,2).toString(16) + '">' + twosComplementBinToDec(lit) + '</span>');
+		desc = desc.replace('%sl','<span class="literal" title="0x' + parseInt(lit,2).toString(16) + '">' + twosComplementBinToDec(lit) + '</span>');
 		res = desc;
 	}
 	$('#result').html(res);
