@@ -372,7 +372,7 @@ function update(val) {
 	updateRb(rb);
 	updateLiteral(lit);
 	updateResult(op,rc,ra,rb,lit);
-	$('#hex-out').html(parseInt(bin,2).toString(16));
+	$('#hex-out').html(parseInt(bin,2).toString(16).toUpperCase());
 }
 
 function updateOpcode(n) {
