@@ -47,10 +47,10 @@ var DESCRIPTORS = {
 	'OP': 'Reg[%rc] &larr; Reg[%ra] %op Reg[%rb]',
 	'OPC': 'Reg[%rc] &larr; Reg[%ra] %op %sl',
 	'LD': 'Reg[%rc] &larr; Mem[Reg[%ra] + %sl]',
-	'ST': 'Mem[Reg[&Ra] + %sl] &larr; Reg[%rc]',
+	'ST': 'Mem[Reg[%ra] + %sl] &larr; Reg[%rc]',
 	'JMP': 'Reg[%rc] &larr; PC + 4; PC &larr; Reg[%ra]',
 	'BEQ': 'Reg[%rc] &larr; PC + 4; if Reg[%ra] = 0 then PC &larr; PC + 4 + 4 * %sl',
-	'BNE': 'Reg[%rc] &larr; PC + 4; if Reg[%ra] &neq; 0 then PC &larr; PC + 4 + 4 * %sl',
+	'BNE': 'Reg[%rc] &larr; PC + 4; if Reg[%ra] &ne; 0 then PC &larr; PC + 4 + 4 * %sl',
 	'LDR': 'Reg[%rc] &larr; Mem[PC + 4 + 4 * %sl]'
 }
 
