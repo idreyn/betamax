@@ -71,12 +71,94 @@ var OPERATORS = {
 	'SRA': '>>>'
 }
 
+var mouseDown = 0;
+
+document.body.onmousedown = function() { 
+  mouseDown++;
+}
+document.body.onmouseup = function() {
+  mouseDown--;
+}
+
 $(function() {
 	$("#opcode-type-select").change(function() {
-		$('#tool').removeClass('type-i').removeClass('type-ii').addClass($(this).val());
+		$('#tool').removeClass('type-i').removeClass('type-ii').removeClass('type-iii').addClass($(this).val());
 	});
 
 	$('#input-base-select').change(updateFromFields);
+
+	$('#binary').each(function() {
+		var $this = $(this),
+			$range = $this.find('#select-range'),
+			mouseStart,
+			mouseTime,
+			down = false;
+
+		$this.mousedown(function(e) {
+			down = true;
+			mouseStart = e.pageX - $this.offset().left;
+			mouseTime = Date.now();
+		});
+
+		$this.mousemove(function(e) {
+			if(!mouseDown) down = false;
+			if(!down) return;
+			var dx = (e.pageX - $this.offset().left) - mouseStart;
+			if(dx > 0) {
+				$range.css('left',mouseStart);
+			} else {
+				$range.css('left',mouseStart + dx);
+			}
+			$range.show().css('width',Math.abs(dx));
+			selectDigits(Math.min(mouseStart,mouseStart + dx),Math.max(mouseStart,mouseStart + dx));
+			$('#tooltip').fadeIn(100).css('left',e.pageX + 10).css('top',e.pageY + 10);
+		})
+
+		$this.mouseup(function(e) {
+			down = false;
+			if(Date.now().valueOf() - mouseTime.valueOf() < 200 || true) {
+				$range.hide();
+				$this.find('.digit').removeClass('selected');
+				$('#tooltip').fadeOut(100);
+			}
+		});
+
+		function selectDigits(a,b) {
+			var min = -1;
+			var max = -1;
+			var i = 32;
+			var d = $this.find('.digit').removeClass('selected').filter(function() {
+				i--;
+				var l = $(this).offset().left - $this.offset().left;
+				var r = l + $(this).width();
+				var is = a < r && b > l;
+				if(is) {
+					if(min == -1) min = i;
+					max = i;
+				}
+				return is;
+			});
+			d.addClass('selected');
+			var bin = d.map(function() {
+				var val = $(this).val();
+				if(!val.length) val = '0';
+				return val;
+			}).toArray().join('');
+			var text = '',
+				range;
+			if(min == -1) {
+				text = 'No selection';
+			} else {
+				if(min == max) {
+					range = '[' + min.toString() + ']';
+				} else {
+					range = '[' + min.toString() + ':' + max.toString() + ']';
+				}
+				text = 'Selected ' + range + ' contains 0x' + parseInt(bin,2).toString(16).toUpperCase();
+			}
+			$('#tooltip').html(text);
+		}
+	});
 
 	$('#input-value').each(function() {
 		var $this = $(this);
@@ -429,7 +511,7 @@ function updateResult(op,rc,ra,rb,lit) {
 		desc = desc.replace('%ra','<span class="ra">' + parseInt(ra,2).toString(10) + '</span>');
 		desc = desc.replace('%rb','<span class="rb">' + parseInt(rb,2).toString(10) + '</span>');
 		desc = desc.replace('%op',op);
-		desc = desc.replace('%sl','<span class="literal" title="0x' + parseInt(lit,2).toString(16) + '">' + twosComplementBinToDec(lit) + '</span>');
+		desc = desc.replace('%sl','<span class="literal" title="0x' + parseInt(lit,2).toString(16).toUpperCase() + '">' + twosComplementBinToDec(lit) + '</span>');
 		res = desc;
 	}
 	$('#result').html(res);

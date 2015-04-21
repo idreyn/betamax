@@ -20,6 +20,7 @@
 					<select id='opcode-type-select'>
 						<option value='type-i'>Rc Ra Rb</option>
 						<option value='type-ii'>Rc Ra Literal</option>
+						<option value='type-iii'> Generic 32 bit</option>
 					</select>
 					&nbsp;
 					Input base:
@@ -33,31 +34,33 @@
 					<span id='hex-out'>
 					00000000
 					</span>
-				<div id='part-summary'>
-					<span class='opcode'>
-					[31:26] Opcode: 0x<span class='opcode-hex'>000</span> (<span class='opcode-val val-sel'>???</span>)
-					</span>
+					</div>
+					<div id='part-summary'>
+						<span class='opcode'>
+						[31:26] Opcode: 0x<span class='opcode-hex'>000</span> (<span class='opcode-val val-sel'>???</span>)
+						</span>
 
-					<span class='rc'>
-					[25:21] Rc: 0x<span class='rc-hex'>000</span> (R<span class='val-sel rc-val'>XX</span>)
-					</span>
+						<span class='rc'>
+						[25:21] Rc: 0x<span class='rc-hex'>000</span> (R<span class='val-sel rc-val'>XX</span>)
+						</span>
 
-					<span class='ra'>
-					[20:16] Ra: 0x<span class='ra-hex'>000</span> (R<span class='val-sel ra-val'>XX</span>)
-					</span>
+						<span class='ra'>
+						[20:16] Ra: 0x<span class='ra-hex'>000</span> (R<span class='val-sel ra-val'>XX</span>)
+						</span>
 
-					<span class='rb'>
-					[15:11] Rb: 0x<span class='rb-hex'>000</span> (R<span class='val-sel rb-val'>XX</span>)
-					</span>
+						<span class='rb'>
+						[15:11] Rb: 0x<span class='rb-hex'>000</span> (R<span class='val-sel rb-val'>XX</span>)
+						</span>
 
-					<span class='unused'>
-					[10:0] Unused
-					</span>
+						<span class='unused'>
+						[10:0] Unused
+						</span>
 
-					<span class='literal'>
-					[15:0] Literal: 0x<span class='val-sel literal-hex'>000</span> / 0d<span class='val-sel literal-dec'>000</span>
-					</span>
-				</div>
+						<span class='literal'>
+						[15:0] Literal: 0x<span class='val-sel literal-hex'>000</span> / 0d<span class='val-sel literal-dec'>000</span>
+						</span>
+					</div>
+				<div id='tooltip'>Don't eat that!</div>
 				<div id='binary'>
 					<!-- A byte -->
 					<span class='byte'>
@@ -147,6 +150,11 @@
 							<div class='hex-digit'>0</div>
 						</span>
 					</span>
+					<div id='range-container'>
+						<div id='select-range'>
+						
+						</div>
+					</div>
 				</div>
 				<div id='result'></div>
 			</div>
