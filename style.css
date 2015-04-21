@@ -41,6 +41,9 @@ html, body {
 }
 
 #hex-out {
+	user-select: all;
+	-moz-user-select: all;
+	-webkit-user-select: all;
 	padding: 5px;
 	border-radius: 5px;
 }
@@ -60,8 +63,9 @@ html, body {
 }
 
 #tool {
-	user-select: none !important;
-	-webkit-user-select: none !important;
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
 	padding: 20px;
 }
 
