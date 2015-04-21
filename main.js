@@ -143,8 +143,8 @@ $(function() {
 
 	$('.opcode-val').click(updatePrompter(
 		'Enter a valid opcode name',
-		function(n) { return OPCODES[n]; },
-		function(n) { return OPCODES[n]; },
+		function(n) { return OPCODES[n.toUpperCase()]; },
+		function(n) { return OPCODES[n.toUpperCase()]; },
 		26,
 		31
 	));
