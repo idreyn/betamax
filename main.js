@@ -110,7 +110,7 @@ $(function() {
 				$this.val(val);
 				setInputBase('2');
 			}
-			if(isBinaryNumber(val) && val.length >= 8) {
+			if(isBinaryNumber(val) && val.length > 8) {
 				setInputBase('2');
 			}
 			if(!isBinaryNumber(val) && isHexNumber(val)) {
