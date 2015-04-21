@@ -61,7 +61,7 @@ var OPERATORS = {
 	'DIV': '/',
 	'CMPEQ': '==',
 	'CMPLT': '<',
-	'CMPLE': '<=',
+	'CMPLE': '&le;',
 	'XOR': 'XOR',
 	'XNOR': 'XNOR',
 	'AND': 'AND',
