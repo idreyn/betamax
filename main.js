@@ -429,11 +429,11 @@ function update(val) {
 	}
 	var opcodeType = bin.slice(0,2);
 	if(opcodeType == '10') {
-		$('#opcode-type-select').val('type-i').attr('disabled','disabled');
+		$('#opcode-type-select').val('type-i');
 	} else if(opcodeType == '01' || opcodeType == '11') {
-		$('#opcode-type-select').val('type-ii').attr('disabled','disabled');
+		$('#opcode-type-select').val('type-ii');
 	} else {
-		$('#opcode-type-select').attr('disabled',null);
+		$('#opcode-type-select').val('type-iii');
 	}
 	$('#opcode-type-select').change();
 	setDigitsFromBinaryString(bin);
