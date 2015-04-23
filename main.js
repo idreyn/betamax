@@ -87,6 +87,33 @@ $(function() {
 
 	$('#input-base-select').change(updateFromFields);
 
+	$('#opcode-select').each(function() {
+		var $this = $(this);
+
+		$this.append($(
+			'<option>',
+			{
+				value: '000000',
+				text: '---'
+			}
+		));
+
+		for(var k in OPCODES) {
+			$this.append($(
+				'<option>',
+				{
+					value: OPCODES[k],
+					text: k
+				}
+			));
+		}
+
+		$this.change(function() {
+			console.log($this.val());
+			updateRange($this.val(),26,31);
+		});
+	});
+
 	$('#binary').each(function() {
 		var $this = $(this),
 			$range = $this.find('#select-range'),
@@ -223,13 +250,9 @@ $(function() {
 		}
 	});
 
-	$('.opcode-val').click(updatePrompter(
-		'Enter a valid opcode name',
-		function(n) { return OPCODES[n.toUpperCase()]; },
-		function(n) { return OPCODES[n.toUpperCase()]; },
-		26,
-		31
-	));
+	$('.opcode-val').click(function() {
+		openElement($('#opcode-select'));
+	});
 
 
 	$('.rc-val').click(updatePrompter(
@@ -389,17 +412,6 @@ function setInputBase(n) {
 	updateFromFields();
 }
 
-function updateFromFields() {
-	var val = $('#input-value').val();
-	var base = parseInt($('#input-base-select').val());
-	if(base == 16) {
-		$('#input-value').attr('maxlength',8);
-	} else {
-		$('#input-value').attr('maxlength',32);
-	}
-	update(parseInt(val,base));
-}
-
 function setDigitsFromBinaryString(n) {
 	n = n.split('');
 	var offset = 32 - n.length;
@@ -419,6 +431,24 @@ function updateFromDigits() {
 	update(getDigits(),2);
 }
 
+function updateFromFields() {
+	var val = $('#input-value').val();
+	var base = parseInt($('#input-base-select').val());
+	if(base == 16) {
+		$('#input-value').attr('maxlength',8);
+	} else {
+		$('#input-value').attr('maxlength',32);
+	}
+	update(parseInt(val,base));
+}
+
+function updateRange(using,rangeStart,rangeEnd) {
+	console.log('updateRange',using,rangeStart,rangeEnd);
+	var currentDigits = getDigits();
+	var res = currentDigits.slice(0,31 - rangeEnd) + using + currentDigits.slice(31 - rangeStart + 1);
+	update(res);
+}
+
 function update(val) {
 	if(isNaN(val)) {
 		val = 0;
@@ -433,7 +463,7 @@ function update(val) {
 	} else if(opcodeType == '01' || opcodeType == '11') {
 		$('#opcode-type-select').val('type-ii');
 	} else {
-		$('#opcode-type-select').val('type-iii');
+
 	}
 	$('#opcode-type-select').change();
 	setDigitsFromBinaryString(bin);
@@ -460,6 +490,7 @@ function update(val) {
 function updateOpcode(n) {
 	$('.opcode-hex').html(parseInt(n,2).toString(16).toUpperCase());
 	$('.opcode-val').html(lookupOpcode(n) || '???');
+	$('#opcode-select').val(n);
 }
 
 function updateRc(n) {
@@ -527,8 +558,7 @@ function promptToUpdate(text,condition,filter,rangeStart,rangeEnd) {
 			if(condition(res)) {
 				ok = true;
 				res = filter(res);
-				var currentDigits = getDigits();
-				update(currentDigits.slice(0,31 - rangeEnd) + res + currentDigits.slice(31 - rangeStart + 1));
+				updateRange(res,rangeStart,rangeEnd);
 			}
 		}
 	}
@@ -539,3 +569,13 @@ function updatePrompter(text,condition,filter,rangeStart,rangeEnd) {
 		promptToUpdate(text,condition,filter,rangeStart,rangeEnd);
 	}
 };
+
+function openElement(elem) {
+    if (document.createEvent) {
+        var e = document.createEvent("MouseEvents");
+        e.initMouseEvent("mousedown", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+        elem[0].dispatchEvent(e);
+    } else if (element.fireEvent) {
+        elem[0].fireEvent("onmousedown");
+    }
+}
