@@ -181,7 +181,7 @@ $(function() {
 				} else {
 					range = '[' + min.toString() + ':' + max.toString() + ']';
 				}
-				text = 'Selected ' + range + ' contains 0x' + parseInt(bin,2).toString(16).toUpperCase();
+				text = 'Selected ' + range + ' contains 0x' + parseInt(bin,2).toString(16).toUpperCase() + ' (' + parseInt(bin,2).toString() + ')';
 			}
 			$('#tooltip').html(text);
 		}
@@ -213,11 +213,6 @@ $(function() {
 				val = val.slice(1);
 				$this.val(val);
 				setInputBase('16');
-			}
-			if(val.slice(0,2) == '0b') {
-				val = val.slice(2);
-				$this.val(val);
-				setInputBase('2');
 			}
 			if(isBinaryNumber(val) && val.length > 8) {
 				setInputBase('2');
